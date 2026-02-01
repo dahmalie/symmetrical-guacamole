@@ -1,0 +1,6 @@
+N unique patients in admission file: 4326
+N people in population: 4328
+N people with an ECG: 4325
+N ECGs: 98645
+N people in device file: 1889
+N patients with in-hospital medication: 4328
