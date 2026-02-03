@@ -1,0 +1,1 @@
+N unique patients with no device admission 0

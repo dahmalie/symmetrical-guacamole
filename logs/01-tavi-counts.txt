@@ -1,0 +1,9 @@
+N unique patients undergoing AVR: 4328 
+# A tibble: 1 × 2
+  obs_start           obs_end            
+  <dttm>              <dttm>             
+1 2016-11-04 00:00:00 2023-04-28 00:00:00
+
+N unique patients undergoing TAVI: 2313
+N unique patients excluded owing to ViV: 20
+N unique TAVI patients with no TAVI admission: 1

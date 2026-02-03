@@ -1,0 +1,9 @@
+# A tibble: 4 × 2
+  GROUP        n
+  <chr>    <int>
+1 Censored    87
+2 Early      228
+3 Known      106
+4 Late        28
+
+N distinct patients in cohort: 2186
