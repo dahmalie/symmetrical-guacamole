@@ -1,0 +1,16 @@
+name	Early	Late	None	All
+miss	26	0	8	34
+n	228	28	1902	2158
+miss_frac	0.114	0	0.004	0.016
+brady	12	2	37	51
+frac_brad	0.053	0.071	0.019	0.024
+avb	24	2	75	101
+frac_avb	0.105	0.071	0.039	0.047
+bbb	148	13	615	776
+frac_bbb	0.649	0.464	0.323	0.36
+lbbb	24	1	131	156
+frac_lbbb	0.162	0.077	0.213	0.201
+rbbb	18	2	62	82
+frac_rbbb	0.122	0.154	0.101	0.106
+unspec	106	10	422	538
+frac_unspec	0.716	0.769	0.686	0.693

@@ -6,7 +6,8 @@ ecg_raw <- read_tsv(ecg_path, col_types = cols())
 
 # wrangle and write
 ecg_raw_key <- ecg_raw %>% 
-  distinct(ECG_NPU, COMP_NAME)
+  distinct(ECG_NPU, COMP_NAME, COMP_UNIT) %>%
+  arrange(ECG_NPU)
 
 write_tsv(ecg_raw_key, snakemake@output$ecg_key)
 

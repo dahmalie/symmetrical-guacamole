@@ -1,0 +1,6 @@
+
+	Pearson's Chi-squared test
+
+data:  table(abnormal$GROUP, abnormal$ABN)
+X-squared = 134.11, df = 2, p-value < 2.2e-16
+

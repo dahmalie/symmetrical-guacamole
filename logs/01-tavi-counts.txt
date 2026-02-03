@@ -6,4 +6,4 @@ N unique patients undergoing AVR: 4328
 
 N unique patients undergoing TAVI: 2313
 N unique patients excluded owing to ViV: 20
-N unique TAVI patients with no TAVI admission: 1
+N unique TAVI patients with no TAVI admission: 36

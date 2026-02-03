@@ -1,18 +1,23 @@
-ECG_NPU	COMP_NAME
-21099	QTc interval
-21106	Autofortolkning
-21094	Ventrikelfrekvens
-21102	R akse
-21101	P akse
-21343	Kommentarer fra EKG-Apparat
-21097	QTc (Fridericia’s formel)
-21103	T akse
-21100	QT interval
-21104	P taks varighed
-21105	RR interval
-21098	QTc (Bassett’s formel)
-21095	PR interval
-21096	QRS interval
-21108	Godkendt
-21107	Kommentarer fra Web-viewer
-16985	Elektrokardiografi (EKG12);Pt
+ECG_NPU	COMP_NAME	COMP_UNIT
+16985	Elektrokardiografi (EKG12);Pt	NA
+21094	Ventrikelfrekvens	/min
+21094	Ventrikelfrekvens	ms
+21094	Ventrikelfrekvens	BPM
+21095	PR interval	ms
+21096	QRS interval	ms
+21097	QTc (Fridericia’s formel)	ms
+21098	QTc (Bassett’s formel)	ms
+21099	QTc interval	ms
+21100	QT interval	ms
+21101	P akse	degrees
+21102	R akse	degrees
+21103	T akse	degrees
+21104	P taks varighed	msec
+21104	P taks varighed	ms
+21105	RR interval	ms
+21106	Autofortolkning	-
+21106	Autofortolkning	NA
+21107	Kommentarer fra Web-viewer	NA
+21108	Godkendt	NA
+21343	Kommentarer fra EKG-Apparat	-
+21343	Kommentarer fra EKG-Apparat	NA

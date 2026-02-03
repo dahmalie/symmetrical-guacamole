@@ -5,7 +5,9 @@ rule targets:
            "01-format/dev_adms.tsv",
            "03-cohort/baseline.tsv",
            "03-cohort/ecgs_prior.tsv",
-           "03-cohort/meds_prior.tsv"
+           "03-cohort/meds_prior.tsv",
+           "04-tbls/tbl1.tsv",
+           "04-tbls/tbl2.tsv"
 
 rule format_colnames:
    input:
@@ -79,4 +81,24 @@ rule prepare_med_tbl:
    output:
      med_out = "03-cohort/meds_prior.tsv"
    script: "scripts/select_meds.R"
+
+rule write_tbl1:
+   input:
+     cohort_in = rules.define_cohort.output['cohort'],
+     med_in = rules.prepare_med_tbl.output['med_out']
+   output:
+     tbl1 = "04-tbls/tbl1.tsv"
+   script: "scripts/write_tbl1.R"
+
+rule write_tbl2:
+   input:
+     cohort_in = rules.define_cohort.output['cohort'],
+     ecgs = rules.prepare_ecg_tbl.output['prior'],
+     ecg_txt = rules.format_free_txt.output['ecg_txt']
+   output:
+     tbl2 = "04-tbls/tbl2.tsv",
+     tbl3 = "04-tbls/tbl3.tsv"
+   log:
+     check0 = "logs/04-chisq.txt"
+   script: "scripts/write_tbl2.R"
 

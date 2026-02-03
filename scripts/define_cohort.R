@@ -14,7 +14,7 @@ sink(log)
 
 tavi_dev <- dev_adm %>% 
   inner_join(tavi_adm, by = c('PID', 'CPR')) %>% 
-  transmute(PID, CPR, 
+  transmute(PID, CPR, DEV_DATE, 
             GROUP = case_when((DEV_OUT < TAVI_IN) | DEV_DATE < TAVI_YMD ~ 'Known',
                               time_length(TAVI_OUT %--% DEV_IN, 'days') > 0 & 
                                 time_length(TAVI_OUT %--% DEV_IN, 'days') <= 30 ~ 'Late',
@@ -28,13 +28,14 @@ tavi_dev %>%
 
 cohort <- tavi_adm %>% 
   left_join(tavi_dev, by = c('PID', 'CPR')) %>% 
-  transmute(PID, CPR, TAVI_YMD, TAVI_OUT, 
+  transmute(PID, CPR, TAVI_YMD, DEV_DATE, TAVI_OUT, 
             GROUP = if_else(is.na(GROUP) | GROUP == 'Censored', 'None', GROUP)) %>% 
   filter(GROUP != 'Known') %>% 
   left_join(select(pop_in, PID, DOB, DOD, SEX), by = 'PID') %>% 
   mutate(DOB = as.Date(DOB),
          DOD = as.Date(DOD)
-         )
+         ) %>%
+  distinct()
 
 n_pat <- n_distinct(cohort$PID)
 cat('\nN distinct patients in cohort:', n_pat)

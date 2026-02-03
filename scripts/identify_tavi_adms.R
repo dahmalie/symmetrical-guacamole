@@ -12,7 +12,7 @@ sink(log)
 
 pop1 <- pop %>% 
   select(PID, CPR, PROC_YMD, AVR_SKS) %>% 
-  mutate(PROC_YMD = ymd_hms(PROC_YMD)) %>% 
+  mutate(PROC_YMD = ymd_hms(PROC_YMD, tz = 'CET')) %>% 
   group_by(CPR) %>% 
   add_count(name = 'CPR_COUNT') %>% 
   ungroup()
@@ -97,6 +97,7 @@ adm_comb <- adm_tavi %>%
             TAVI_YMD,
             TAVI_OUT = coalesce(end, ADM_OUT)
   ) %>% 
-  ungroup() 
+  ungroup() %>%
+  distinct() 
 
 write_tsv(adm_comb, snakemake@output$adm_out)

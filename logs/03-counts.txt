@@ -3,7 +3,7 @@
   <chr>    <int>
 1 Censored    87
 2 Early      228
-3 Known      106
+3 Known      100
 4 Late        28
 
-N distinct patients in cohort: 2186
+N distinct patients in cohort: 2157
