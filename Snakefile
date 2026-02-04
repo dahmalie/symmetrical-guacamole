@@ -31,7 +31,8 @@ rule format_free_txt:
     ecg_prep = rules.format_colnames.output['ecg_out'],
    output:
     ecg_key = "02-keys/ecgs.tsv",
-    ecg_txt = "01-format/ecg_auto.tsv"
+    ecg_txt = "01-format/ecg_auto.tsv",
+    pmr = "01-format/ecg_pm.tsv"
    script: "scripts/clean_freetxt_ecgs.R"
 
 rule identify_tavi_adms:
@@ -59,7 +60,8 @@ rule define_cohort:
    input:
     pop0 = rules.format_colnames.output['pop_out'],
     tavi = rules.identify_tavi_adms.output['adm_out'],
-    dev = rules.identify_dev_adms.output['adm_out']
+    dev = rules.identify_dev_adms.output['adm_out'],
+    pmr = rules.format_free_txt.output['pmr']
    output:
     cohort = "03-cohort/baseline.tsv",
    log:
@@ -69,7 +71,8 @@ rule define_cohort:
 rule prepare_ecg_tbl:
    input:
      cohort = rules.define_cohort.output['cohort'],
-     ecg = rules.format_colnames.output['ecg_out']
+     ecg = rules.format_colnames.output['ecg_out'],
+     pmr = rules.format_free_txt.output['pmr']
    output:
      prior = "03-cohort/ecgs_prior.tsv"
    script: "scripts/select_ecgs.R"

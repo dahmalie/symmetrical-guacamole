@@ -22,6 +22,7 @@ cohort1 <- cohort %>%
 tbl1_bg <- cohort1 %>% 
   group_by(GROUP) %>% 
   summarise(mean_age = mean(AGE_TAVI),
+            sd_age = sd(AGE_TAVI),
             n = n(),
             n_male = sum(MALE),
             frac_m = n_male/n,
@@ -40,6 +41,7 @@ tbl1_bg <- cohort1 %>%
 
 tbl1_all <- cohort1 %>% 
   summarise(mean_age = mean(AGE_TAVI),
+            sd_age = sd(AGE_TAVI),
             n = n(),
             n_male = sum(MALE),
             frac_m = n_male/n,

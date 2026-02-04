@@ -77,7 +77,7 @@ doubles <- adm_tavi %>%
   arrange(PID, ADM_IN, ADM_OUT) %>% 
   group_by(PID) %>% 
   mutate(time_diff = as.numeric(difftime(ADM_IN, lag(ADM_OUT), units = 'hours')),
-         new_group = if_else(is.na(time_diff) | time_diff >= 3, 1, 0), #we concatenate admissions <3 hrs apart
+         new_group = if_else(is.na(time_diff) | time_diff >= 5, 1, 0), #we concatenate admissions <5 hrs apart
          group_id = cumsum(new_group)
   ) %>% 
   group_by(PID, group_id) %>% 

@@ -60,3 +60,10 @@ combine <- auto %>%
   mutate_if(is.numeric, replace_na, replace = 0)
 
 write_tsv(combine, snakemake@output$ecg_txt)
+
+pm <- auto %>%
+     filter(str_detect(ECG_TEXT, 'pacet rytme') |
+            str_detect(ECG_TEXT, 'acemaker')) %>%
+     transmute(PID, ECG_ID, ECG_YMDHMS, PM = 1)
+
+write_tsv(pm, snakemake@output$pmr)

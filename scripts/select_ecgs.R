@@ -4,9 +4,11 @@ library(hms)
 
 cohort_path <- snakemake@input$cohort
 ecg_path <- snakemake@input$ecg
+pmr_path <- snakemake@input$pmr
 
 cohort <- read_tsv(cohort_path, col_types = cols())
 ecg <- read_tsv(ecg_path, col_types = cols())
+pmr <- read_tsv(pmr_path, col_types = cols())
 
 cohort1 <- cohort %>% 
   mutate(TAVI_OUT = force_tz(TAVI_OUT, 'CET'))
@@ -39,7 +41,7 @@ select_ecg <- ecg0 %>%
 select_ecg_prior <- select_ecg %>%
   left_join(select(cohort1, PID, GROUP, TAVI_YMD, TAVI_OUT), by = 'PID', relationship = 'many-to-many') %>%
   filter(GROUP != 'Early') %>% 
-  filter(as.Date(ECG_YMDHMS) %within% interval(TAVI_YMD, TAVI_OUT)) %>%
+  filter(as.Date(ECG_YMDHMS) %within% interval(TAVI_YMD, TAVI_OUT), !ECG_ID %in% pmr$ECG_ID) %>%
   mutate(dist = time_length(ECG_YMDHMS %--% TAVI_OUT, 'hours')) %>% 
   filter(dist > 0) %>% #we accept ecgs taken within 1 hour of discharge
   arrange(desc(dist)) %>% # we want ecg closest to discharge
@@ -47,7 +49,9 @@ select_ecg_prior <- select_ecg %>%
 
 prior_dev_ecg <- select_ecg %>%
   left_join(select(cohort1, PID, GROUP, TAVI_YMD, DEV_DATE), by = 'PID', relationship = 'many-to-many') %>%
-  filter(GROUP == 'Early', TAVI_YMD != DEV_DATE, as_hms(ECG_YMDHMS) > as_hms("12:00:00")) %>% #avoid risk of pre TAVI ecgs
+  filter(GROUP == 'Early', TAVI_YMD != DEV_DATE, 
+#         as_hms(ECG_YMDHMS) > as_hms("12:00:00"), 
+         !ECG_ID %in% pmr$ECG_ID ) %>% #avoid risk of pre TAVI ecgs
   filter(as.Date(ECG_YMDHMS) %within% interval(TAVI_YMD, DEV_DATE)) %>%
   arrange(ECG_YMDHMS) %>% 
   distinct(PID, .keep_all = TRUE)
@@ -55,7 +59,7 @@ prior_dev_ecg <- select_ecg %>%
 same_dev_ecg <- select_ecg %>%
   left_join(select(cohort1, PID, GROUP, TAVI_YMD, DEV_DATE), by = 'PID', relationship = 'many-to-many') %>%
   filter(TAVI_YMD == DEV_DATE) %>%
-  filter(as.Date(ECG_YMDHMS) %within% interval(TAVI_YMD, DEV_DATE)) %>%
+  filter(as.Date(ECG_YMDHMS) == TAVI_YMD, !ECG_ID %in% pmr$ECG_ID) %>%
   arrange(ECG_YMDHMS) %>% 
   distinct(PID, .keep_all = TRUE)
 

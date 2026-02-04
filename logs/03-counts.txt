@@ -6,4 +6,5 @@
 3 Known      100
 4 Late        28
 
-N distinct patients in cohort: 2157
+N distinct patients with a PM ECG: 168
+N distinct patients in cohort: 2020
