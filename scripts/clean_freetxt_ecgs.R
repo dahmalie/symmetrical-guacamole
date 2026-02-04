@@ -29,12 +29,14 @@ n_distinct(auto$ECG_ID)
 
 lbbb <- auto %>% 
   filter(str_detect(ECG_TEXT, 'Venstresidigt grenblok') | 
-           str_detect(ECG_TEXT, 'venstresidigt grenblok')) %>% 
+           str_detect(ECG_TEXT, 'venstresidigt grenblok') |
+        str_detect(ECG_TEXT, 'enstre grenblok') ) %>% 
   mutate(LBBB = 1)
 
 rbbb <- auto %>% 
   filter(str_detect(ECG_TEXT, 'jresidigt grenblok') |
-           str_detect(ECG_TEXT, 'jresidigt grenblok')  ) %>% 
+           str_detect(ECG_TEXT, 'jresidigt grenblok') |
+         str_detect(ECG_TEXT, 'jre grenblok'  ) ) %>% 
   mutate(RBBB = 1)
 
 facs <- auto %>% 
