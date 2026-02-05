@@ -2,5 +2,5 @@
 	Pearson's Chi-squared test
 
 data:  table(abnormal$GROUP, abnormal$ABN)
-X-squared = 40.068, df = 2, p-value = 1.992e-09
+X-squared = 40.541, df = 2, p-value = 1.572e-09
 

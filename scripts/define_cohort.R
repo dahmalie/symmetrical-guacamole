@@ -34,20 +34,29 @@ tavi_dev %>%
 ecg1 <- ecg %>%
     mutate(ECG_YMD = as.Date(ECG_YMDHMS)) %>%
     inner_join(tavi_adm, by = 'PID') %>%
-    filter(ECG_YMD < TAVI_YMD)
-
-n_ecg <- n_distinct(ecg1$PID)
-cat('\nN distinct patients with a PM ECG:', n_ecg)
+    filter(ECG_YMD < TAVI_YMD) 
 
 cohort <- tavi_adm %>% 
   left_join(tavi_dev, by = c('PID', 'CPR')) %>% 
   transmute(PID, CPR, TAVI_YMD, DEV_DATE, TAVI_OUT, 
             GROUP = if_else(is.na(GROUP) | GROUP == 'Censored', 'None', GROUP)) %>% 
-  filter(GROUP != 'Known', !PID %in% ecg1$PID) %>% 
+  filter(GROUP != 'Known') %>% 
   left_join(pops, by = 'PID') %>% 
   mutate(DOB = as.Date(DOB),
          DOD = as.Date(DOD)
          )
+
+ecg2 <- cohort %>%
+    filter(PID %in% ecg1$PID)
+
+n_ecg <- n_distinct(ecg2$PID)
+cat('\nN distinct patients with a PM ECG:', n_ecg, '\n')
+
+cohort <- cohort %>%
+    filter(!PID %in% ecg1$PID)
+
+cohort %>%
+    count(GROUP)
 
 n_pat <- n_distinct(cohort$PID)
 cat('\nN distinct patients in cohort:', n_pat)

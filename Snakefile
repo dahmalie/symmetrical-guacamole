@@ -63,7 +63,7 @@ rule define_cohort:
     dev = rules.identify_dev_adms.output['adm_out'],
     pmr = rules.format_free_txt.output['pmr']
    output:
-    cohort = "03-cohort/baseline.tsv",
+    cohort = "03-cohort/baseline.tsv"
    log:
     check0 = "logs/03-counts.txt"
    script: "scripts/define_cohort.R"

@@ -64,6 +64,7 @@ write_tsv(combine, snakemake@output$ecg_txt)
 pm <- auto %>%
      filter(str_detect(ECG_TEXT, 'pacet rytme') |
             str_detect(ECG_TEXT, 'acemaker')) %>%
+     filter(!str_detect(ECG_TEXT, 'nodal pacemaker')) %>%
      transmute(PID, ECG_ID, ECG_YMDHMS, PM = 1)
 
 write_tsv(pm, snakemake@output$pmr)
